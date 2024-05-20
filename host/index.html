@@ -5,8 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Render Web Component</title>
 </head>
-<body>
-  <amazing-component name="Tiago"></amazing-component>
+<body style="display: flex; gap: 20px; flex-direction: column;">
+  <div>
+    <button id="loadComponentButton">Load Amazing Component</button>
+    <button id="closeComponentButton">Close Amazing Component</button>
+    <div id="componentContainer"></div>
+  </div>
+  
+  <div>
+    <button id="loadAnotherComponentButton">Load Another Amazing Component</button>
+    <button id="closeAnotherComponentButton">Close Another Amazing Component</button>
+    <div id="anotherComponentContainer"></div>
+  </div>
+  
   <script src="amazing-component.umd.js"></script>
+  <script src="index.js"></script>
+  <script src="../web-component/src/scripts/componentLoader.js"></script>
 </body>
 </html>
