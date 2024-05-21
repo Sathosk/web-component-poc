@@ -11,7 +11,7 @@ export default function AnAmazingComponent({ name, containerId }: IAnAmazingComp
   return (
     <>
       <style>{style}</style>
-      <section id={containerId + '-child'} className="h-full py-10 flex justify-center items-center flex-col gap-5 w-full bg-gray-400">
+      <section className="h-full py-10 flex justify-center items-center flex-col gap-5 w-full bg-gray-400">
         <Counter />
         <Form name={name} containerId={containerId}/>
       </section>

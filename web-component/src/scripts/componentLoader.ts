@@ -16,7 +16,6 @@ type TInstance = {
 }
 
 (function() {
-  console.log('Amazing plugin loaded');
   let instances: TInstance[] = [];
 
   function createComponent( config: TConfig ) {
@@ -102,4 +101,5 @@ type TInstance = {
 
   // Expose a single instance of the plugin
   (window as any).AmazingComponentPlugin = new AmazingComponentPlugin();
+  console.log('Amazing plugin loaded');
 })();
