@@ -1,11 +1,25 @@
 interface IFormProps {
   name: string
+  containerId: string
 }
 
-export default function Form({ name }: IFormProps) {
+export default function Form({ name, containerId }: IFormProps) {
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    console.log(event.currentTarget.document.value)
+    event.preventDefault();
+    const parent = document.getElementById(`${containerId}-target`);
+
+    if (!parent) return console.error('Parent not found')
+
+    const form = event.currentTarget;
+    const inputValue = form.document.value;
+
+    console.log('Form submitted, dispatching custom event');
+
+    const customEvent = new CustomEvent('save', {
+      detail: inputValue,
+    });
+
+    parent?.dispatchEvent(customEvent);
   }
 
   return (

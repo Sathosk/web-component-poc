@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES2020", // Target ES2015 or later to use Array.prototype.find
+    "module": "ESNext", // Use ESNext module system
+    "lib": ["ES2020", "DOM"], // Include necessary libraries
+    "strict": true, // Enable strict type-checking options
+    "outDir": "./dist", // Specify the output directory for the compiled JavaScript files
+    "esModuleInterop": true, // Enable compatibility with CommonJS modules
+    "skipLibCheck": true, // Skip type checking of declaration files
+  },
+  "include": ["./*.ts"],      // Include your TypeScript files in src/scripts
+  "exclude": ["node_modules"]              // Exclude node_modules directory
+}

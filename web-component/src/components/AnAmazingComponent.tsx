@@ -4,15 +4,16 @@ import style from '../index.css?inline'
 
 export interface IAnAmazingComponentProps {
   name: string
+  containerId: string
 }
 
-export default function AnAmazingComponent({ name }: IAnAmazingComponentProps) {
+export default function AnAmazingComponent({ name, containerId }: IAnAmazingComponentProps) {
   return (
     <>
       <style>{style}</style>
-      <section className="h-full py-10 flex justify-center items-center flex-col gap-5 w-full bg-gray-400">
+      <section id={containerId + '-child'} className="h-full py-10 flex justify-center items-center flex-col gap-5 w-full bg-gray-400">
         <Counter />
-        <Form name={name} />
+        <Form name={name} containerId={containerId}/>
       </section>
     </>
   )
