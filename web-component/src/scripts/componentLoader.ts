@@ -58,7 +58,7 @@ type TInstance = {
 
     createInstance(config: TConfig) {
       console.log('Checking if instance already exists');
-      const instance = instances.find(instance => instance.containerId === config.containerId);
+      const instance = findInstance(config.containerId);
       if (instance) return console.error(`Instance with id ${config.containerId} already exists.`);
       
       const container = document.getElementById(config.containerId);
