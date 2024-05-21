@@ -57,6 +57,12 @@ type TInstance = {
   class AmazingComponentPlugin {
 
     createInstance(config: TConfig) {
+      if (!config) return console.error('Config object is required');
+      if (!config.containerId) return console.error('Container id is required');
+      if (!config.props) return console.error('Props are required');
+      if (!config.props.name) return console.error('Prop Name is required');
+      if (!config.onSave) return console.error('onSave callback is required');
+
       console.log('Checking if instance already exists');
       const instance = findInstance(config.containerId);
       if (instance) return console.error(`Instance with id ${config.containerId} already exists.`);
@@ -79,17 +85,17 @@ type TInstance = {
     deleteInstance(containerId: string) {
       if (containerId) {
         const container = document.getElementById(containerId);
-        // const instance = instances.find(instance => instance.containerId === containerId);
         const instance = findInstance(containerId);
 
         if (!instance) return console.error(`Instance with id ${containerId} not found`);
 
         console.log('Deleting instance');
         container?.removeChild(instance.component);
-        // instances = instances.filter(instance => instance.containerId !== containerId);
         removeInstance(containerId);
 
         console.log(`Instance ${containerId} deleted`);
+      } else {
+        console.error('Container id is required');
       }
     }
   }
