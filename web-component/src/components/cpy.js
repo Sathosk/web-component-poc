@@ -254,8 +254,8 @@
 //                 return target;
 //             }
 
-            // function deepCloneWithoutFunctions(obj) {
-            //     var clone = {};
-            //     Object.keys(obj).forEach(key => {
-            //         if (isObject(obj[key])) {
-            //             clone[key] =
+// function deepCloneWithoutFunctions(obj) {
+//     var clone = {};
+//     Object.keys(obj).forEach(key => {
+//         if (isObject(obj[key])) {
+//             clone[key] =

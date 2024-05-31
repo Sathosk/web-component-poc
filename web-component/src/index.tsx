@@ -1,3 +1,3 @@
-import AnAmazingWebComponent from "./web-component";
+import AnAmazingWebComponent from './web-component'
 
-customElements.define("amazing-component", AnAmazingWebComponent);
+customElements.define('amazing-component', AnAmazingWebComponent)
