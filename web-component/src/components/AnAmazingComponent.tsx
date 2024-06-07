@@ -1,4 +1,3 @@
-import style from '../index.css?inline'
 import Editor from './HtmlEditor/Editor'
 
 export interface IAnAmazingComponentProps {

@@ -12,16 +12,12 @@
     "build:all": "npm run build && npm run build:script"
   },
   "dependencies": {
-    "@arco-themes/react-easy-email-theme": "^0.0.3",
+    "@editex/react-email-editor": "^1.0.9",
     "autoprefixer": "^10.4.19",
-    "easy-email-core": "^4.16.0",
-    "easy-email-editor": "^4.16.0",
-    "easy-email-extensions": "^4.16.0",
     "lucide-react": "^0.378.0",
     "postcss": "^8.4.38",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-final-form": "^6.5.9",
     "react-use": "^17.5.0"
   },
   "devDependencies": {

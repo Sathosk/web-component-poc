@@ -1,129 +1,59 @@
-// theme, If you need to change the theme, you can make a duplicate in https://arco.design/themes/design/1799/setting/base/Color
-import arcoThemeStyle from '@arco-themes/react-easy-email-theme/css/arco.css?inline'
-import { AdvancedType, BasicType, BlockManager } from 'easy-email-core'
-import {
-  EmailEditor,
-  EmailEditorProvider,
-  IEmailTemplate,
-} from 'easy-email-editor'
-import emailEditorStyle from 'easy-email-editor/lib/style.css?inline'
-import { ExtensionProps, StandardLayout } from 'easy-email-extensions'
-import emailExtensionStyle from 'easy-email-extensions/lib/style.css?inline'
-import React, { useEffect, useMemo, useState } from 'react'
-import { useWindowSize } from 'react-use'
+import EmailEditor from '@editex/react-email-editor'
+import { useEffect, useRef, useState } from 'react'
 
-import templateData from '../../template.json'
-import { IAnAmazingComponentProps } from '../AnAmazingComponent'
+import style from './Editor.module.css'
 
-const initialValues = {
-  subject: 'Welcome to Easy-email',
-  subTitle: 'Nice to meet you!',
-  content: BlockManager.getBlockByType(BasicType.PAGE)!.create({}),
+interface IEmailEditorProps {
+  containerId: string
+  name: string
 }
 
-const categories: ExtensionProps['categories'] = [
-  {
-    label: 'Content',
-    active: true,
-    blocks: [
-      {
-        type: AdvancedType.TEXT,
-      },
-      {
-        type: AdvancedType.IMAGE,
-        payload: { attributes: { padding: '0px 0px 0px 0px' } },
-      },
-      {
-        type: AdvancedType.BUTTON,
-      },
-      {
-        type: AdvancedType.SOCIAL,
-      },
-      {
-        type: AdvancedType.DIVIDER,
-      },
-      {
-        type: AdvancedType.SPACER,
-      },
-      {
-        type: AdvancedType.HERO,
-      },
-      {
-        type: AdvancedType.WRAPPER,
-      },
-    ],
-  },
-  {
-    label: 'Layout',
-    active: true,
-    displayType: 'column',
-    blocks: [
-      {
-        title: '2 columns',
-        payload: [
-          ['50%', '50%'],
-          ['33%', '67%'],
-          ['67%', '33%'],
-          ['25%', '75%'],
-          ['75%', '25%'],
-        ],
-      },
-      {
-        title: '3 columns',
-        payload: [
-          ['33.33%', '33.33%', '33.33%'],
-          ['25%', '25%', '50%'],
-          ['50%', '25%', '25%'],
-        ],
-      },
-      {
-        title: '4 columns',
-        payload: [[['25%', '25%', '25%', '25%']]],
-      },
-    ],
-  },
-]
-
-export default function Editor({
+export default function MyEmailEditor({
   containerId,
   name,
-}: IAnAmazingComponentProps) {
-  const { width } = useWindowSize()
-  const [isReady, setIsReady] = useState(false)
+}: IEmailEditorProps) {
+  const emailEditorRef = useRef<EmailEditor>(null)
+  const [emailData, setEmailData] = useState<[] | null>(null)
 
   useEffect(() => {
-    setIsReady(true)
+    setTimeout(() => {
+      setEmailData([])
+    }, 1000)
   }, [])
 
-  const smallScene = width < 1400
+  const exportHtml = () => {
+    if (!emailEditorRef.current) return
+    const html = emailEditorRef.current.exportHtml()
+    const blob = new Blob([html], { type: 'text/html' })
+    const a = document.createElement('a')
+    a.download = 'email.html'
+    a.href = URL.createObjectURL(blob)
+    a.click()
+  }
 
-  if (!isReady) {
-    return null
+  const showEmailData = () => {
+    console.log(emailEditorRef.current.blockList)
   }
 
   return (
-    <>
-      <style>{arcoThemeStyle}</style>
-      <style>{emailEditorStyle}</style>
-      <style>{emailExtensionStyle}</style>
-      <EmailEditorProvider
-        data={initialValues}
-        height={'calc(100vh - 72px)'}
-        autoComplete
-        dashed={false}
+    <div
+      className={style['page-container']}
+      style={{ height: '800px', display: 'grid', gridTemplateRows: 'auto 1fr' }}
+    >
+      <div
+        className="page-header"
+        style={{ height: '50px', width: '100%', backgroundColor: 'red' }}
       >
-        {({ values }) => {
-          return (
-            <StandardLayout
-              compact={!smallScene}
-              showSourceCode={true}
-              categories={categories}
-            >
-              <EmailEditor />
-            </StandardLayout>
-          )
-        }}
-      </EmailEditorProvider>
-    </>
+        <button onClick={exportHtml}>Export HTML</button>
+        <button onClick={showEmailData}>Show email data</button>
+      </div>
+      <div style={{ overflow: 'auto' }}>
+        {emailData ? (
+          <EmailEditor ref={emailEditorRef} defaultBlockList={emailData} />
+        ) : (
+          <>Loading....</>
+        )}
+      </div>
+    </div>
   )
 }
