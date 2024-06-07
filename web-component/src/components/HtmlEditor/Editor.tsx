@@ -1,4 +1,4 @@
-import EmailEditor from '@editex/react-email-editor'
+import { Reader, TReaderDocument } from '@usewaypoint/email-builder'
 import { useEffect, useRef, useState } from 'react'
 
 import style from './Editor.module.css'
@@ -8,52 +8,39 @@ interface IEmailEditorProps {
   name: string
 }
 
+const CONFIGURATION: TReaderDocument = {
+  root: {
+    type: 'EmailLayout',
+    data: {
+      backdropColor: '#F8F8F8',
+      canvasColor: '#FFFFFF',
+      textColor: '#242424',
+      fontFamily: 'MODERN_SANS',
+      childrenIds: ['block-1709578146127'],
+    },
+  },
+  'block-1709578146127': {
+    type: 'Text',
+    data: {
+      style: {
+        fontWeight: 'normal',
+        padding: {
+          top: 16,
+          bottom: 16,
+          right: 24,
+          left: 24,
+        },
+      },
+      props: {
+        text: 'Hello world',
+      },
+    },
+  },
+}
+
 export default function MyEmailEditor({
   containerId,
   name,
 }: IEmailEditorProps) {
-  const emailEditorRef = useRef<EmailEditor>(null)
-  const [emailData, setEmailData] = useState<[] | null>(null)
-
-  useEffect(() => {
-    setTimeout(() => {
-      setEmailData([])
-    }, 1000)
-  }, [])
-
-  const exportHtml = () => {
-    if (!emailEditorRef.current) return
-    const html = emailEditorRef.current.exportHtml()
-    const blob = new Blob([html], { type: 'text/html' })
-    const a = document.createElement('a')
-    a.download = 'email.html'
-    a.href = URL.createObjectURL(blob)
-    a.click()
-  }
-
-  const showEmailData = () => {
-    console.log(emailEditorRef.current.blockList)
-  }
-
-  return (
-    <div
-      className={style['page-container']}
-      style={{ height: '800px', display: 'grid', gridTemplateRows: 'auto 1fr' }}
-    >
-      <div
-        className="page-header"
-        style={{ height: '50px', width: '100%', backgroundColor: 'red' }}
-      >
-        <button onClick={exportHtml}>Export HTML</button>
-        <button onClick={showEmailData}>Show email data</button>
-      </div>
-      <div style={{ overflow: 'auto' }}>
-        {emailData ? (
-          <EmailEditor ref={emailEditorRef} defaultBlockList={emailData} />
-        ) : (
-          <>Loading....</>
-        )}
-      </div>
-    </div>
-  )
+  return <Reader document={CONFIGURATION} rootBlockId="root" />
 }

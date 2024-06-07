@@ -12,7 +12,7 @@
     "build:all": "npm run build && npm run build:script"
   },
   "dependencies": {
-    "@editex/react-email-editor": "^1.0.9",
+    "@usewaypoint/email-builder": "^0.0.8",
     "autoprefixer": "^10.4.19",
     "lucide-react": "^0.378.0",
     "postcss": "^8.4.38",

@@ -1,4 +1,4 @@
-import Editor from './HtmlEditor/Editor'
+import MyEmailEditor from './HtmlEditor/Editor'
 
 export interface IAnAmazingComponentProps {
   name: string
@@ -11,7 +11,7 @@ export default function AnAmazingComponent({
 }: IAnAmazingComponentProps) {
   return (
     <>
-      <Editor name={name} containerId={containerId} />
+      <MyEmailEditor name={name} containerId={containerId} />
     </>
   )
 }
