@@ -32,7 +32,19 @@ export default function MyEmailEditor({
   }
 
   const showEmailData = () => {
-    console.log(emailEditorRef.current.blockList)
+    if (!emailEditorRef.current) return
+    if (typeof window === 'undefined') return
+    if (!window.AmazingComponentPlugin) return
+
+    const { onSave } = window.AmazingComponentPlugin
+
+    onSave({
+      containerId,
+      payload: {
+        html: emailEditorRef.current.exportHtml(),
+        json: JSON.stringify(emailEditorRef.current.blockList),
+      },
+    })
   }
 
   return (

@@ -1,3 +1,9 @@
+import {
+  IAmazingComponentPlugin,
+  TOnSave,
+  TPayload,
+} from '../types/web-component'
+
 type TProps = {
   name: string
   containerId: string
@@ -6,7 +12,7 @@ type TProps = {
 type TConfig = {
   containerId: string
   props: TProps
-  onSave: (payload: string) => void
+  onSave: (payload: TPayload) => void
 }
 
 type TInstance = {
@@ -26,10 +32,10 @@ type TInstance = {
     component.setAttribute('id', config.containerId + '-target')
 
     // Listen for the custom event
-    component.addEventListener('save', (event) => {
-      const customEvent = event as CustomEvent<string>
-      config.onSave(customEvent.detail)
-    })
+    // component.addEventListener('save', (event) => {
+    //   const customEvent = event as CustomEvent<string>
+    //   config.onSave(customEvent.detail)
+    // })
 
     return component
   }
@@ -52,7 +58,7 @@ type TInstance = {
     return instances.find((instance) => instance.containerId === containerId)
   }
 
-  class AmazingComponentPlugin {
+  class AmazingComponentPlugin implements IAmazingComponentPlugin {
     createInstance(config: TConfig) {
       if (!config) return console.error('Config object is required')
       if (!config.containerId) return console.error('Container id is required')
@@ -98,6 +104,15 @@ type TInstance = {
       } else {
         console.error('Container id is required')
       }
+    }
+
+    onSave({ containerId, payload }: TOnSave) {
+      const instance = findInstance(containerId)
+
+      if (!instance)
+        return console.error(`Instance with id ${containerId} not found`)
+
+      instance.onSave(payload)
     }
   }
 

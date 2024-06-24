@@ -24,7 +24,7 @@ loadAnotherComponentButton.addEventListener('click', function() {
   window.AmazingComponentPlugin.createInstance({
     containerId: 'anotherComponentContainer', 
     props: { name: 'Ronaldo' },
-    onSave: (e) => console.log('from anotherComponentContainer', e.toUpperCase())
+    onSave: (e) => console.log('from anotherComponentContainer', e)
   });
 });
 
